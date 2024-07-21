@@ -1,0 +1,30 @@
+.container {
+  border: 1px solid black;
+  border-radius: 4px;
+  max-width: 400px;
+  padding: 14px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.inputField {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin-bottom: 18px;
+}
+
+.error {
+  color: red;
+}
+
+.button {
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(143, 141, 141);
+  padding: 4px 8px;
+  font-size: 12px;
+}

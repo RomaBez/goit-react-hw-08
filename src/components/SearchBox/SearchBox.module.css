@@ -1,0 +1,12 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin-bottom: 25px;
+}
+
+.field {
+  max-width: 400px;
+  font-size: 18px;
+  margin-top: 10px;
+}
