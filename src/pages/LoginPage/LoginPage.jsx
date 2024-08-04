@@ -4,7 +4,7 @@ export default function LoginPage() {
   return (
     <div>
       <p>Please log in</p>
-      <LoginForm />;
+      <LoginForm />
     </div>
   );
 }

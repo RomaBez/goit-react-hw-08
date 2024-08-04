@@ -17,7 +17,7 @@ export default function RegistrationForm() {
       }}
       onSubmit={handleSubmit}
     >
-      <Form autoComplete="off">
+      <Form>
         <label htmlFor="name">
           Name
           <Field type="text" name="name" />

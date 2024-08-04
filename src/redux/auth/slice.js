@@ -64,4 +64,4 @@ const authSlice = createSlice({
   },
 });
 
-export default authSlice = authSlice.reducer;
+export default authSlice.reducer;

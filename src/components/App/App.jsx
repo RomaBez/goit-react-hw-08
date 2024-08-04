@@ -1,26 +1,63 @@
-import css from "./App.module.css";
-import ContactForm from "../ContactForm/ContactForm";
-import SearchBox from "../SearchBox/SearchBox";
-import ContactList from "../ContactList/ContactList";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
+import Layout from "../Layout/Layout";
+import { selectIsRefreshing } from "../../redux/auth/selectors";
+import { refreshUser } from "../../redux/auth/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, lazy, Suspense } from "react";
-import { fetchContacts } from "../../redux/contacts/operations";
-import 
+import { Route, Routes } from "react-router-dom";
+
+const ContactsPage = lazy(() =>
+  import("../../pages/ContactsPage/ContactsPage")
+);
+const HomePage = lazy(() => import("../../pages/HomePage/HomePage"));
+const LoginPage = lazy(() => import("../../pages/LoginPage/LoginPage"));
+const RegistrationPage = lazy(() =>
+  import("../../pages/RegistrationPage/RegistrationPage")
+);
 
 function App() {
   const dispatch = useDispatch();
-  const contacts = useSelector(selectContacts);
-  const error = useSelector((state) => state.contacts.error);
-
-  const handleDelete = (id) => {
-    dispatch(deleteContact(id));
-  };
+  const isRefreshing = useSelector(selectIsRefreshing);
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(refreshUser());
   }, [dispatch]);
 
-  return;
+  return isRefreshing ? (
+    <div>
+      <p>Refreshing, need to wait.</p>
+    </div>
+  ) : (
+    <Layout>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/contacts"
+            element={
+              <PrivateRoute element={<ContactsPage />} redirectTo="/login" />
+            }
+          />
+          <Route
+            path="/register"
+            element={
+              <RestrictedRoute
+                element={<RegistrationPage />}
+                redirectTo="/contacts"
+              />
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <RestrictedRoute element={<LoginPage />} redirectTo="/contacts" />
+            }
+          />
+        </Routes>
+      </Suspense>
+    </Layout>
+  );
 }
 
 export default App;
