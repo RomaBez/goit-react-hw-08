@@ -3,6 +3,7 @@ import * as Yup from "yup";
 import { nanoid } from "nanoid";
 import { useId, useState } from "react";
 import { useDispatch } from "react-redux";
+import { toast } from "react-hot-toast";
 import { addContact } from "../../redux/contacts/operations";
 
 import css from "./ContactForm.module.css";
@@ -33,6 +34,7 @@ const ContactForm = () => {
         id: nanoid(),
       })
     );
+    toast.success("Contact added successfully!");
     actions.resetForm();
   };
 

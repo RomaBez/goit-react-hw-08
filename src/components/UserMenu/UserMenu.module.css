@@ -1,0 +1,14 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.username {
+  font-weight: 780;
+}
+
+.usernamespan {
+  font-weight: 780;
+  color: tomato;
+}

@@ -6,6 +6,7 @@ import { refreshUser } from "../../redux/auth/operations";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect, lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 const ContactsPage = lazy(() =>
   import("../../pages/ContactsPage/ContactsPage")
@@ -56,6 +57,7 @@ function App() {
           />
         </Routes>
       </Suspense>
+      <Toaster />
     </Layout>
   );
 }
