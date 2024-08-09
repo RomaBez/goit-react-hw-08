@@ -15,6 +15,11 @@ export const register = createAsyncThunk(
       setAuthHeader(response.data.token);
       return response.data;
     } catch (error) {
+      if (error.code === 11000) {
+        alert(
+          "A user with this email already exists. Please try another email or sign in to your account."
+        );
+      }
       return thunkAPI.rejectWithValue(error.message);
     }
   }
@@ -46,7 +51,7 @@ export const refreshUser = createAsyncThunk(
     setAuthHeader(reduxState.auth.token);
 
     try {
-      const response = await axios.get("/users/me");
+      const response = await axios.get("/users/current");
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
