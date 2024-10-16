@@ -1,0 +1,13 @@
+.generalStats {
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-top: 20px;
+  background-color: #f9f9f9;
+}
+
+.statsSection {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}

@@ -1,0 +1,15 @@
+.paginator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+span {
+  font-size: 18px;
+}

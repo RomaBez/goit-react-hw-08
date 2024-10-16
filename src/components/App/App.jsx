@@ -1,6 +1,7 @@
 import PrivateRoute from "../PrivateRoute/PrivateRoute";
 import RestrictedRoute from "../RestrictedRoute/RestrictedRoute";
 import Layout from "../Layout/Layout";
+import CalendarPage from "../../pages/CalendarPage/CalendarPage";
 import { selectIsRefreshing } from "../../redux/auth/selectors";
 import { refreshUser } from "../../redux/auth/operations";
 import { useDispatch, useSelector } from "react-redux";
@@ -34,6 +35,7 @@ function App() {
       <Suspense fallback={<div>Loading...</div>}>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/calendar" element={<CalendarPage />} />
           <Route
             path="/contacts"
             element={
