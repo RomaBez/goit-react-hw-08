@@ -10,7 +10,7 @@ const DaysList = ({ days, onSelectDay }) => {
           className={`${styles.dayItem} ${
             day.progress < 100 ? styles.incomplete : ""
           }`}
-          onClick={() => onSelectDay(day)}
+          onClick={(e) => onSelectDay({ ...day, waterPerc: day.progress }, e)}
         >
           <span>{day.date}</span>
           <span>{`${day.progress}%`}</span>
