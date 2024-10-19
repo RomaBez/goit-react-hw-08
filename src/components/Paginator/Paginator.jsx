@@ -86,46 +86,54 @@ const Paginator = () => {
 
   return (
     <div>
-      <div className={styles.paginator}>
-        <button onClick={goPrevMonth}>
-          <MdKeyboardArrowLeft />
-        </button>
-        <span>{`${new Date(currentYear, currentMonth).toLocaleString("en-US", {
-          month: "long",
-        })}, ${currentYear}`}</span>
-        {!(
-          currentYear === new Date().getFullYear() &&
-          currentMonth === new Date().getMonth()
-        ) && (
-          <button onClick={goNextMonth}>
-            <MdKeyboardArrowRight />
-          </button>
+      <div className={styles.calendarContainer}>
+        <div className={styles.monthNavigation}>
+          <h2>Month</h2>
+          <div className={styles.monthControl}>
+            <button className={styles.arrowButton} onClick={goPrevMonth}>
+              <MdKeyboardArrowLeft />
+            </button>
+            <span>
+              {`${new Date(currentYear, currentMonth).toLocaleString("en-US", {
+                month: "long",
+              })}, ${currentYear}`}
+            </span>
+            {!(
+              currentYear === new Date().getFullYear() &&
+              currentMonth === new Date().getMonth()
+            ) && (
+              <button className={styles.arrowButton} onClick={goNextMonth}>
+                <MdKeyboardArrowRight />
+              </button>
+            )}
+          </div>
+        </div>
+        <div className={styles.daysContainer}>
+          {days.map((day) => (
+            <div className={styles.dayCell} key={day.date}>
+              <div
+                className={`${styles.dayItem} ${
+                  day.progress < 100 ? "incomplete" : ""
+                }`}
+                onClick={(e) =>
+                  handleSelectDay({ ...day, waterPerc: day.progress }, e)
+                }
+              >
+                <div className={styles.dayProgress}>{day.date}</div>
+              </div>
+              <div className={styles.dayProgress}>{`${day.progress}%`}</div>
+            </div>
+          ))}
+        </div>
+        {selectedDay && (
+          <DaysGeneralStats
+            selectedDay={selectedDay}
+            position={modalPosition}
+            onShow={Boolean(selectedDay)}
+            onClose={handleCloseModal}
+          />
         )}
       </div>
-      <div className={styles.daysList}>
-        {days.map((day) => (
-          <div
-            key={day.date}
-            className={`${styles.dayItem} ${
-              day.progress < 100 ? styles.incomplete : ""
-            }`}
-            onClick={(e) =>
-              handleSelectDay({ ...day, waterPerc: day.progress }, e)
-            }
-          >
-            <span>{day.date}</span>
-            <span>{`${day.progress}%`}</span>
-          </div>
-        ))}
-      </div>
-      {selectedDay && (
-        <DaysGeneralStats
-          selectedDay={selectedDay}
-          position={modalPosition}
-          onShow={Boolean(selectedDay)}
-          onClose={handleCloseModal}
-        />
-      )}
     </div>
   );
 };

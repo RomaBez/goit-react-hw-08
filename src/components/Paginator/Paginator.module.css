@@ -1,45 +1,73 @@
-.paginator {
+.calendarContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+.monthNavigation {
+  display: flex;
+  margin-bottom: 15px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.arrowButton {
+  cursor: pointer;
+  margin: 10px;
+  border: none;
+  background-color: rgba(0, 0, 255, 0);
+}
+
+.monthControl {
+  color: var(--primery-color-blue, #407bff);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  margin-bottom: 15px;
+  justify-content: center;
 }
 
-/* Кнопка для навігації по місяцях */
-.paginator button {
-  cursor: pointer;
-  background-color: transparent;
-  border: none; /* Додаємо, щоб прибрати обведення кнопки */
-}
-
-/* Список днів */
-.daysList {
+.daysContainer {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
-  gap: 26px; /* Відстань між елементами */
+  gap: 26px;
+  row-gap: 16px;
 }
 
-/* Клітинка дня */
-.dayItem {
+.dayCell {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 50px; /* Ширина для відображення */
-  padding: 10px;
-  border-radius: 5px;
-  background-color: #fff; /* Колір фону */
-  outline: 1px solid #ff9d43; /* Контур */
+  box-sizing: border-box;
+}
+
+.dayItem {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: 1px solid #ff9d43;
   cursor: pointer;
+  font-size: 14px;
+  line-height: 18px;
 }
 
-/* Стиль для неповних днів */
-.incomplete {
-  opacity: 0.6; /* Зменшена непрозорість для неповних */
+.dayNumber {
+  font-size: 18px;
+  font-weight: bold;
 }
 
-/* Медіа запити для адаптивності */
+.dayProgress {
+  color: var(--secondary-color-4, #9ebbff);
+  font-size: 10px;
+  font-weight: 400;
+  margin-top: 4px;
+}
+
 @media screen and (min-width: 768px) {
-  .dayItem {
-    width: 60px; /* Збільшена ширина для більших екранів */
+  .day-item {
+    width: 60px;
+    height: 60px;
   }
 }
