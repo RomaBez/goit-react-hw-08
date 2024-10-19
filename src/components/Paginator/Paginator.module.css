@@ -1,37 +1,45 @@
 .paginator {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  margin-bottom: 15px;
 }
 
-button {
-  background-color: transparent;
-  border: none;
+/* Кнопка для навігації по місяцях */
+.paginator button {
   cursor: pointer;
+  background-color: transparent;
+  border: none; /* Додаємо, щоб прибрати обведення кнопки */
 }
 
-span {
-  font-size: 18px;
-}
-
+/* Список днів */
 .daysList {
-  display: grid;
-  grid-template-columns: repeat(7, 1fr);
-  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 26px; /* Відстань між елементами */
 }
 
+/* Клітинка дня */
 .dayItem {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  border: 1px solid lightgray;
-  border-radius: 50%;
+  width: 50px; /* Ширина для відображення */
   padding: 10px;
+  border-radius: 5px;
+  background-color: #fff; /* Колір фону */
+  outline: 1px solid #ff9d43; /* Контур */
   cursor: pointer;
 }
 
-.dayItem.incomplete {
-  border-color: orange;
-  background-color: rgba(255, 165, 0, 0.2);
+/* Стиль для неповних днів */
+.incomplete {
+  opacity: 0.6; /* Зменшена непрозорість для неповних */
+}
+
+/* Медіа запити для адаптивності */
+@media screen and (min-width: 768px) {
+  .dayItem {
+    width: 60px; /* Збільшена ширина для більших екранів */
+  }
 }

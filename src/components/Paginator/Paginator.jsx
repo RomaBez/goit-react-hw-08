@@ -1,35 +1,48 @@
 import { useState, useEffect, useRef } from "react";
 import { MdKeyboardArrowLeft } from "react-icons/md";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { DaysGeneralStats } from "../DaysGeneralStats/DaysGeneralStats";
 import styles from "./Paginator.module.css";
 
-const Paginator = ({ days, onMonthChange, onSelectDay }) => {
+const Paginator = () => {
+  const [days, setDays] = useState([]);
+  const [selectedDay, setSelectedDay] = useState(null);
+  const [modalPosition, setModalPosition] = useState(null);
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth());
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const modalRef = useRef(null);
 
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
+  useEffect(() => {
+    generateDays(currentYear, currentMonth);
+  }, [currentYear, currentMonth]);
+
+  const generateDays = (year, month) => {
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const daysArray = Array.from({ length: daysInMonth }, (v, i) => ({
+      date: i + 1,
+      month: month,
+      year: year,
+      progress: Math.floor(Math.random() * 101),
+    }));
+    setDays(daysArray);
+  };
+
+  const handleSelectDay = (day, event) => {
+    setSelectedDay(day);
+    const rect = event.target.getBoundingClientRect();
+    setModalPosition({
+      top: rect.top,
+      left: rect.left,
+      width: rect.width,
+    });
+  };
 
   const goPrevMonth = () => {
     if (currentMonth === 0) {
       setCurrentMonth(11);
       setCurrentYear((prev) => prev - 1);
-      onMonthChange(11, currentYear - 1);
     } else {
       setCurrentMonth((prev) => prev - 1);
-      onMonthChange(currentMonth - 1, currentYear);
     }
   };
 
@@ -41,11 +54,34 @@ const Paginator = ({ days, onMonthChange, onSelectDay }) => {
     if (currentMonth === 11) {
       setCurrentMonth(0);
       setCurrentYear((prev) => prev + 1);
-      onMonthChange(0, currentYear + 1);
     } else {
       setCurrentMonth((prev) => prev + 1);
-      onMonthChange(currentMonth + 1, currentYear);
     }
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (modalRef.current && !modalRef.current.contains(event.target)) {
+        handleCloseModal();
+      }
+    };
+
+    const handleKeyDown = (event) => {
+      if (event.key === "Escape") {
+        handleCloseModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    document.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [modalRef]);
+
+  const handleCloseModal = () => {
+    setSelectedDay(null);
   };
 
   return (
@@ -54,7 +90,9 @@ const Paginator = ({ days, onMonthChange, onSelectDay }) => {
         <button onClick={goPrevMonth}>
           <MdKeyboardArrowLeft />
         </button>
-        <span>{`${months[currentMonth]}, ${currentYear}`}</span>
+        <span>{`${new Date(currentYear, currentMonth).toLocaleString("en-US", {
+          month: "long",
+        })}, ${currentYear}`}</span>
         {!(
           currentYear === new Date().getFullYear() &&
           currentMonth === new Date().getMonth()
@@ -71,13 +109,23 @@ const Paginator = ({ days, onMonthChange, onSelectDay }) => {
             className={`${styles.dayItem} ${
               day.progress < 100 ? styles.incomplete : ""
             }`}
-            onClick={(e) => onSelectDay({ ...day, waterPerc: day.progress }, e)}
+            onClick={(e) =>
+              handleSelectDay({ ...day, waterPerc: day.progress }, e)
+            }
           >
             <span>{day.date}</span>
             <span>{`${day.progress}%`}</span>
           </div>
         ))}
       </div>
+      {selectedDay && (
+        <DaysGeneralStats
+          selectedDay={selectedDay}
+          position={modalPosition}
+          onShow={Boolean(selectedDay)}
+          onClose={handleCloseModal}
+        />
+      )}
     </div>
   );
 };
