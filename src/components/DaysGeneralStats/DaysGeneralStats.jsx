@@ -55,20 +55,33 @@ export const DaysGeneralStats = ({
     const { top = 0, left = 0, width = 0 } = position;
     const modal = modalRef.current;
     const modalWidth = modal.offsetWidth;
+    const modalHeight = modal.offsetHeight;
+    const isMobileScreen = window.innerWidth <= 320;
 
-    const spaceToLeft = left;
-    const spaceToRight = window.innerWidth - left - width;
+    let leftDirectin = 0;
+    let rightDirection = 0;
 
-    if (spaceToLeft > modalWidth) {
+    if (isMobileScreen) {
+      modal.style.width = `80%`;
+      modal.style.left = "10%";
+      const adjustedTop = Math.max(0, top - modalHeight);
+      modal.style.top = `${adjustedTop}px`;
+      modal.style.transform = `translateX(0)`;
+    } else {
+      leftDirectin = left;
+      rightDirection = window.innerWidth - left - width;
+    }
+
+    if (leftDirectin > modalWidth) {
       modal.style.left = `${left - modalWidth}px`;
-    } else if (spaceToRight > modalWidth) {
+    } else if (rightDirection > modalWidth) {
       modal.style.left = `${left + width}px`;
     } else {
       modal.style.left = "50%";
       modal.style.transform = "translateX(-50%)";
     }
 
-    modal.style.top = `${top - modal.offsetHeight}px`;
+    modal.style.top = `${top - modalHeight}px`;
   }, [position]);
 
   return (

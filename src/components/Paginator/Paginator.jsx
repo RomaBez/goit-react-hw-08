@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
-import { MdKeyboardArrowLeft } from "react-icons/md";
-import { MdKeyboardArrowRight } from "react-icons/md";
+import { MdArrowBackIos } from "react-icons/md";
+import { MdArrowForwardIos } from "react-icons/md";
 import { DaysGeneralStats } from "../DaysGeneralStats/DaysGeneralStats";
 import styles from "./Paginator.module.css";
 
@@ -85,15 +85,15 @@ const Paginator = () => {
   };
 
   return (
-    <div>
+    <div className={styles.monthContainer}>
       <div className={styles.calendarContainer}>
         <div className={styles.monthNavigation}>
           <h2>Month</h2>
           <div className={styles.monthControl}>
             <button className={styles.arrowButton} onClick={goPrevMonth}>
-              <MdKeyboardArrowLeft />
+              <MdArrowBackIos style={{ fontSize: "14px" }} />
             </button>
-            <span>
+            <span className={styles.spanInfo}>
               {`${new Date(currentYear, currentMonth).toLocaleString("en-US", {
                 month: "long",
               })}, ${currentYear}`}
@@ -103,7 +103,7 @@ const Paginator = () => {
               currentMonth === new Date().getMonth()
             ) && (
               <button className={styles.arrowButton} onClick={goNextMonth}>
-                <MdKeyboardArrowRight />
+                <MdArrowForwardIos style={{ fontSize: "14px" }} />
               </button>
             )}
           </div>
@@ -113,7 +113,7 @@ const Paginator = () => {
             <div className={styles.dayCell} key={day.date}>
               <div
                 className={`${styles.dayItem} ${
-                  day.progress < 100 ? "incomplete" : ""
+                  day.progress < 100 ? styles.incomplete : styles.completed
                 }`}
                 onClick={(e) =>
                   handleSelectDay({ ...day, waterPerc: day.progress }, e)
