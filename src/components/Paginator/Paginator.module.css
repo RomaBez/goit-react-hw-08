@@ -1,39 +1,53 @@
 .monthContainer {
   margin-top: 24px;
-  min-width: 320px;
   max-width: 100%;
 }
 
 .calendarContainer {
   display: flex;
   flex-direction: column;
-  /* margin: 0 20px; */
   margin: 0 auto;
   max-width: 600px;
-  padding: 0 20px;
 }
 
 .monthNavigation {
   display: flex;
   margin-bottom: 16px;
-  justify-content: space-between;
   align-items: center;
 }
 
+.monthTitle {
+  font-size: 24px;
+  line-height: 30px;
+}
+
 .arrowButton {
-  cursor: pointer;
+  background: none;
   border: none;
-  background-color: rgba(0, 0, 255, 0);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.arrowButton:disabled {
+  cursor: not-allowed;
+  opacity: 0;
+}
+
+.disabledArrow {
+  pointer-events: none;
+  opacity: 0;
 }
 
 .arrowButton:first-child {
-  margin-right: 6px;
-  margin-top: 4px;
+  margin-bottom: 2px;
+  left: 116px;
 }
 
 .arrowButton:last-child {
-  margin-left: 6px;
-  margin-top: 4px;
+  margin-bottom: 2px;
+  right: 44px;
 }
 
 .arrowButton .icon {
@@ -41,18 +55,24 @@
 }
 
 .monthControl {
-  color: var(--primery-color-blue, #407bff);
+  color: #407bff;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-top: 2px;
+  padding-left: 20px;
+  width: 100%;
 }
 
 .spanInfo {
   margin-top: 2px;
+  margin: 0 auto;
+  text-align: center;
 }
 
 .daysContainer {
-  width: 100%;
+  list-style: none;
+  padding: 0;
   display: flex;
   flex-wrap: wrap;
   gap: 26px;
@@ -63,40 +83,104 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-sizing: border-box;
 }
 
 .dayItem {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: #fff;
+  background-color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  outline: 1px solid #ff9d43;
   cursor: pointer;
   font-size: 14px;
   line-height: 18px;
 }
 
-.dayNumber {
-  font-size: 18px;
-  font-weight: bold;
-}
-
 .dayProgress {
-  color: var(--secondary-color-4, #9ebbff);
+  color: #9ebbff;
   font-size: 10px;
   font-weight: 400;
   margin-top: 4px;
+  padding-left: 2px;
+  line-height: 16px;
 }
 
 .incomplete {
-  outline: 1px solid #ff9d43;
+  outline: #f69234;
 }
 
 .completed {
   outline: none;
-  background-color: white;
+  background-color: #ffffff;
+}
+
+@media screen and (min-width: 768px) {
+  .calendarContainer {
+    margin: 0;
+    max-width: 100%;
+  }
+
+  .arrowButton:first-child {
+    left: 534px;
+  }
+
+  .arrowButton:last-child {
+    right: 70px;
+  }
+
+  .monthControl {
+    width: 194px;
+    margin-left: 386px;
+  }
+
+  .daysContainer {
+    gap: 34px;
+    row-gap: 20px;
+  }
+
+  .dayProgress {
+    font-size: 13px;
+    line-height: 20px;
+  }
+
+  .dayItem {
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .monthTitle {
+    font-size: 26px;
+    line-height: 32px;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  .monthControl {
+    margin-left: 274px;
+  }
+
+  .arrowButton:first-child {
+    left: 390px;
+    margin-bottom: 0px;
+  }
+
+  .arrowButton:last-child {
+    right: 38px;
+    margin-bottom: 0px;
+  }
+
+  .monthControl {
+    width: 194px;
+  }
+
+  .daysContainer {
+    gap: 22px;
+  }
+
+  .dayProgress {
+    font-size: 12px;
+    line-height: 18px;
+  }
 }

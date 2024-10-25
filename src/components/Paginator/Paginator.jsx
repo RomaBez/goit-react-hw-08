@@ -31,8 +31,8 @@ const Paginator = () => {
     setSelectedDay(day);
     const rect = event.target.getBoundingClientRect();
     setModalPosition({
-      top: rect.top,
-      left: rect.left,
+      top: rect.top + window.scrollY,
+      left: rect.left + window.scrollX,
       width: rect.width,
     });
   };
@@ -88,7 +88,7 @@ const Paginator = () => {
     <div className={styles.monthContainer}>
       <div className={styles.calendarContainer}>
         <div className={styles.monthNavigation}>
-          <h2>Month</h2>
+          <h2 className={styles.monthTitle}>Month</h2>
           <div className={styles.monthControl}>
             <button className={styles.arrowButton} onClick={goPrevMonth}>
               <MdArrowBackIos style={{ fontSize: "14px" }} />
@@ -98,32 +98,41 @@ const Paginator = () => {
                 month: "long",
               })}, ${currentYear}`}
             </span>
-            {!(
-              currentYear === new Date().getFullYear() &&
-              currentMonth === new Date().getMonth()
-            ) && (
-              <button className={styles.arrowButton} onClick={goNextMonth}>
-                <MdArrowForwardIos style={{ fontSize: "14px" }} />
-              </button>
-            )}
+            <button
+              className={`${styles.arrowButton} ${
+                currentYear === new Date().getFullYear() &&
+                currentMonth === new Date().getMonth()
+                  ? styles.disabledArrow
+                  : ""
+              }`}
+              onClick={goNextMonth}
+              disabled={
+                currentYear === new Date().getFullYear() &&
+                currentMonth === new Date().getMonth()
+              }
+            >
+              <MdArrowForwardIos style={{ fontSize: "14px" }} />
+            </button>
           </div>
         </div>
-        <div className={styles.daysContainer}>
-          {days.map((day) => (
-            <div className={styles.dayCell} key={day.date}>
-              <div
-                className={`${styles.dayItem} ${
-                  day.progress < 100 ? styles.incomplete : styles.completed
-                }`}
-                onClick={(e) =>
-                  handleSelectDay({ ...day, waterPerc: day.progress }, e)
-                }
-              >
-                <div className={styles.dayProgress}>{day.date}</div>
-              </div>
-              <div className={styles.dayProgress}>{`${day.progress}%`}</div>
-            </div>
-          ))}
+        <div>
+          <ul className={styles.daysContainer}>
+            {days.map((day) => (
+              <li className={styles.dayCell} key={day.date}>
+                <div
+                  className={`${styles.dayItem} ${
+                    day.progress < 100 ? styles.incomplete : styles.completed
+                  }`}
+                  onClick={(e) =>
+                    handleSelectDay({ ...day, waterPerc: day.progress }, e)
+                  }
+                >
+                  <div className={styles.dayDate}>{day.date}</div>
+                </div>
+                <div className={styles.dayProgress}>{`${day.progress}%`}</div>
+              </li>
+            ))}
+          </ul>
         </div>
         {selectedDay && (
           <DaysGeneralStats
